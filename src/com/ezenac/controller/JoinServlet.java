@@ -33,7 +33,7 @@ public class JoinServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		// response.getWriter().append("Served at: ").append(request.getContextPath());
 		RequestDispatcher dispatcher=request.getRequestDispatcher("member/join.jsp");
 		dispatcher.forward(request, response);
 	}
@@ -62,7 +62,9 @@ public class JoinServlet extends HttpServlet {
 		
 		MemberDAO mdao = MemberDAO.getInstance();
 		int result=mdao.insertMember(mvo);
+		
 		HttpSession session=request.getSession();
+		
 		if(result == 1) {
 			session.setAttribute("userid",mvo.getUserid());
 			request.setAttribute("message","회원 가입에 성공했습니다");
@@ -70,7 +72,8 @@ public class JoinServlet extends HttpServlet {
 			request.setAttribute("message","회원 가입에 실패했습니다.");
 		}
 		
-		
+		RequestDispatcher dispatcher=request.getRequestDispatcher("member/login.jsp");
+		dispatcher.forward(request, response);
 		
 	}
 

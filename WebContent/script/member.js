@@ -1,7 +1,7 @@
 function loginCheck(){
 	if(document.frm.userid.value.length == 0){
 		alert("아이디를 입력하세요.");
-		document.frm.userid.focus();
+		document.frm.userid.focus(); // focus : box안에 커서
 		
 		return false;
 	}
@@ -11,6 +11,7 @@ function loginCheck(){
 		
 		return false;
 	}
+	return true;
 }
 
 function idCheck(){
@@ -21,11 +22,12 @@ function idCheck(){
 		return;
 	}
 	
-	var url="idCheck.do?userid="+document.frm.userid.value;
+	var url="idCheck.do?userid="+document.frm.userid.value; // idCheck.do (IdCheckServlet.java)
 	window.open(url,"_blank_1","toolbar=no,menubar=no,scrollbars=yes,resizable=no,width=450,height=200");
+	/* 제목 없을 때 : _blank_1 */
 }
 
-function idok(userid){
+function idok(userid){ // id중복 체크
 	opener.frm.userid.value=document.frm.userid.value;
 	opener.frm.reid.value=document.frm.userid.value;
 	self.close();

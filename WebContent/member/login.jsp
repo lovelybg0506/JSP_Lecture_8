@@ -16,7 +16,7 @@
 			<td><input type="text" name="userid" value="${userid}"></td>
 		</tr>
 		<tr>
-			<td>암호</td>
+			<td>암 호</td>
 			<td><input type="password" name="pwd"></td>
 		</tr>
 		<tr>

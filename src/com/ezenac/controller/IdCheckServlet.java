@@ -31,12 +31,15 @@ public class IdCheckServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		// response.getWriter().append("Served at: ").append(request.getContextPath());
+		
 		String userid=request.getParameter("userid");
 		MemberDAO mdao=MemberDAO.getInstance();
 		int result=mdao.confirmID(userid);
+		
 		request.setAttribute("userid",userid);
 		request.setAttribute("result",result);
+		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("member/idcheck.jsp");
 		dispatcher.forward(request, response);
 		

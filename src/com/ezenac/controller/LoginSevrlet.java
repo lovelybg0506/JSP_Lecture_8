@@ -33,13 +33,15 @@ public class LoginSevrlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		// response.getWriter().append("Served at: ").append(request.getContextPath());
 		String url="member/login.jsp";
 		HttpSession session = request.getSession();
+		
 		if(session.getAttribute("loginUser") != null) { // 이미 로그인 된 사용자이면
 			url="main.jsp"; // 메인페이지로 이동
 		}
-		RequestDispatcher dispatcher=request.getRequestDispatcher(url);
+		
+		RequestDispatcher dispatcher=request.getRequestDispatcher(url); // url = member/login.jsp
 		dispatcher.forward(request, response);
 	}
 
@@ -52,6 +54,7 @@ public class LoginSevrlet extends HttpServlet {
 		String url="member/login.jsp";
 		String userid=request.getParameter("userid");
 		String pwd=request.getParameter("pwd");
+		
 		MemberDAO mdao=MemberDAO.getInstance();
 		int result=mdao.userCheck(userid, pwd);
 		

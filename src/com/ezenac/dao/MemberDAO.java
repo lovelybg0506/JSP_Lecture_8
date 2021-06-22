@@ -23,20 +23,25 @@ public class MemberDAO {
 	}
 	
 	public Connection getConnection()throws Exception{
-		Context context=null;
-		DataSource dataSource=null;
-		Connection connection=null;
+	
+		Connection conn = null;
+		Context initContext = new InitialContext();
+		Context envContext = (Context)initContext.lookup("java:/comp/env");
+		DataSource ds = (DataSource)envContext.lookup("jdbc/Oracle11g");
+		conn = ds.getConnection();
 		
-		try {
-			context=new InitialContext();
-			dataSource=(DataSource)context.lookup("java:comp/env/jdbc/Oracle11g");
-			connection=dataSource.getConnection();
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		
-		return connection;
+		return conn;
 	}
+		/*
+		  Context context=null; DataSource dataSource=null; Connection connection=null;
+		  
+		  try { context=new InitialContext();
+		  dataSource=(DataSource)context.lookup("java:comp/env/jdbc/Oracle11g");
+		  connection=dataSource.getConnection(); }catch(Exception e) {
+		  e.printStackTrace(); }
+		  
+		  return connection; }
+		*/
 	
 	// 사용자 인증시 사용
 	public int userCheck(String userid,String pwd) {
@@ -158,7 +163,7 @@ public class MemberDAO {
 	
 	public int insertMember(MemberVO mvo) {
 		int result=-1;
-		String sql="insert into member values(?,?,?,?,?)";
+		String sql="insert into member values(?,?,?,?,?,?)";
 		Connection conn=null;
 		PreparedStatement pstmt=null;
 		
@@ -172,6 +177,7 @@ public class MemberDAO {
 			pstmt.setString(5,mvo.getPhone());
 			pstmt.setInt(6,mvo.getAdmin());
 			result=pstmt.executeUpdate();
+			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
@@ -196,6 +202,7 @@ public class MemberDAO {
 		try {
 			conn=getConnection();
 			pstmt=conn.prepareStatement(sql);
+			
 			pstmt.setString(1,mvo.getPwd());
 			pstmt.setString(2,mvo.getEmail());
 			pstmt.setString(3,mvo.getPhone());
